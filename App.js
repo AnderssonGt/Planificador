@@ -6,7 +6,9 @@ import {
   View,
   Pressable,
   Image,
-  Modal
+  Modal,
+  Text,
+  FlatList
 } from 'react-native'
 import Encabezado from './src/components/Encabezado';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
@@ -25,20 +27,35 @@ const App = () => {
     else {
       setBandera(false)
       Alert.alert(
-        'Error', 'El presupuesto debe ser mayor a 0',
-        [{ text: 'Aceptar' }]
+        'Error', 'El presupuesto debe ser mayor a 0', [{ text: 'Aceptar' }]
       )
     }
   }
+
+  const agregaGasto = (nuevoGasto) => {
+    if (Object.values(nuevoGasto).includes('')) {
+      Alert.alert(
+        'Error', 'Todos los campos son obligatorios', [{ text: 'Aceptar' }]
+      )
+      console.log(agregaGasto)
+    }
+    else {
+      nuevoGasto.id = Date.now()
+      setGastos([...gastos, nuevoGasto])
+    }
+  }
+
   return (
     <SafeAreaView style={styles.contenedorPrincipal}>
       <View style={styles.encabezado}>
         <Encabezado></Encabezado>
         {bandera ?
-          (<ControlPresupuesto
-            presupuesto={presupuesto}
-            gastos={gastos}
-          />) :
+          (
+              <ControlPresupuesto
+                presupuesto={presupuesto}
+                gastos={gastos}
+              />
+          ) :
           (<NuevoPresupuesto
             presupuesto={presupuesto}
             setPresupuesto={setPresupuesto}
@@ -46,12 +63,22 @@ const App = () => {
           ></NuevoPresupuesto>
           )}
       </View>
+      {bandera &&  
+      (
+      <View>
+      <Text style={styles.tituloGastos}>Gastos</Text>
+      <FlatList>
+
+      </FlatList>
+      </View>
+      )}
       <Modal
         visible={mostrarFormGasto}
         animationType='slide'
       >
         <FormularioGasto
           setMostrarFormGasto={setMostrarFormGasto}
+          agregaGasto={agregaGasto}
         >
         </FormularioGasto>
       </Modal>
@@ -83,8 +110,14 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     position: 'absolute',
-    top: 330,
+    top: 200,
     right: 20
+  },
+  tituloGastos:{
+    marginTop:60,
+    textAlign:'center',
+    fontSize:25,
+    fontWeight:'bold'
   }
 });
 

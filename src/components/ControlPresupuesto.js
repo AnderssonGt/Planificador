@@ -12,10 +12,10 @@ const ControlPresupuesto = ({ presupuesto, gastos }) => {
   const [disponible, setDisponible] = useState()
 
   useEffect(() => {
-    const totalGastado = gastos.reduce((total, item) => total + Number(item.valor), 0)
+    const totalGastado = gastos.reduce((total, item) => total + Number(item.valorGasto), 0)
     setGastado(totalGastado)
     setDisponible(presupuesto - totalGastado)
-  }, [])
+  }, [gastos])
   return (
     <View style={estilosGenerales.contenedor}>
 
