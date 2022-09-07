@@ -8,6 +8,7 @@ import {
     Image,
     Text,
     TextInput,
+    ScrollView,
 
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
@@ -25,60 +26,66 @@ const FormularioGasto = ({ setMostrarFormGasto, agregaGasto }) => {
                 <Text style={styles.textoBoton}>X Cerrar</Text>
             </Pressable>
             <View style={estilosGenerales.contenedor}>
-
-                <Text style={styles.titulo}>Nuevo Gasto</Text>
-
-
-                <View style={styles.campo}>
-                    <Text style={styles.label}>Nombre Gasto:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Ingrese nombre del Gasto Ej. Comida'
-                        value={nombreGasto}
-                        onChangeText={setNombreGasto}
-                    >
-                    </TextInput>
-                </View>
-
-                <View style={styles.campo} >
-                    <Text style={styles.label}>Valor:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Ingrese valor del Gasto Ej. Q.50'
-                        value={valorGasto}
-                        onChangeText={setValorGasto}
-                    >
-                    </TextInput>
-                </View>
-
-                <View style={styles.campo}>
-                    <Text style={styles.label}>Categoria Gasto</Text>
-                    <Picker
-                        style={styles.input}
-                        selectedValue={categoria}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setCategoria(itemValue)
-                        }
-                    >
-                        <Picker.Item value='' label='--Seleccione--' />
-                        <Picker.Item value='Ahorro' label='Ahorro' />
-                        <Picker.Item value='Comida' label='Comida' />
-                        <Picker.Item value='Salud' label='Salud' />
-                        <Picker.Item value='Entretenimiento' label='Entretenimiento' />
-                    </Picker>
+                <ScrollView>
+                    <Text style={styles.titulo}>Nuevo Gasto</Text>
 
 
-                <Pressable 
-                style={styles.botonAgregar}
-                onPress={()=>{agregaGasto({nombreGasto,valorGasto,categoria})
-                setMostrarFormGasto(false)
-                }}
-                >
-                        <Text style={styles.textoBoton}>Agregar gasto</Text>
-                </Pressable>
-                </View>
-            </View>
-        </SafeAreaView>
+                    <View style={styles.campo}>
+                        <Text style={styles.label}>Nombre Gasto:</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Ingrese nombre del Gasto Ej. Comida'
+                            value={nombreGasto}
+                            onChangeText={setNombreGasto}
+                        >
+                        </TextInput>
+                    </View>
+
+                    <View style={styles.campo} >
+                        <Text style={styles.label}>Valor:</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Ingrese valor del Gasto Ej. Q.50'
+                            value={valorGasto}
+                            onChangeText={setValorGasto}
+                        >
+                        </TextInput>
+                    </View>
+
+                   
+                        <Text style={styles.label}>Categoria Gasto</Text>
+                        <Picker
+                            style={styles.input}
+                            selectedValue={categoria}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setCategoria(itemValue)
+                            }
+                        >
+                            <Picker.Item value='' label='--Seleccione--' />
+                            <Picker.Item value='ahorro' label='Ahorro' />
+                            <Picker.Item value='casa' label='Casa' />
+                            <Picker.Item value='comida' label='Comida' />
+                            <Picker.Item value='gastos' label='Gastos Varios' />
+                            <Picker.Item value='ocio' label='Ocio' />
+                            <Picker.Item value='salud' label='Salud' />
+                            <Picker.Item value='suscripciones' label='Suscripciones' />
+                        </Picker>
+
+
+                        <Pressable
+                            style={styles.botonAgregar}
+                            onPress={() => {
+                                agregaGasto({ nombreGasto, valorGasto, categoria })
+                                setMostrarFormGasto(false)
+                            }}
+                        >
+                            <Text style={styles.textoBoton}>Agregar gasto</Text>
+                        </Pressable>
+             
+            
+            </ScrollView>
+        </View>
+        </SafeAreaView >
 
     );
 }
@@ -86,7 +93,8 @@ const FormularioGasto = ({ setMostrarFormGasto, agregaGasto }) => {
 const styles = StyleSheet.create({
     formulario: {
         backgroundColor: '#15A3EB',
-        flex: 1
+        flex: 1,
+        minHeight: 400
     },
     botonCerrar: {
         backgroundColor: '#f2400a',
@@ -102,29 +110,29 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     titulo: {
-        textAlign:'center',
-        fontSize:25,
-        fontWeight:'bold'
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: 'bold'
     },
     campo: {
-        marginTop:15
+        marginTop: 15
     },
     label: {
-        fontSize:15,
-        fontWeight:'bold',
-        textTransform:'uppercase'
+        fontSize: 15,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     },
     input: {
         backgroundColor: '#f5f5f5',
-        borderRadius:10,
-        padding:10,
-        marginTop:10
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 10
     },
-    botonAgregar:{
-        backgroundColor:'#89E27E',
-        borderRadius:10,
-        padding:10,
-        marginTop:25
+    botonAgregar: {
+        backgroundColor: '#89E27E',
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 25
     }
 });
 

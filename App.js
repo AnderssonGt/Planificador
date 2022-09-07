@@ -8,12 +8,14 @@ import {
   Image,
   Modal,
   Text,
-  FlatList
+  FlatList,
+  ScrollView
 } from 'react-native'
 import Encabezado from './src/components/Encabezado';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 import ControlPresupuesto from './src/components/ControlPresupuesto';
 import FormularioGasto from './src/components/FormularioGasto';
+import ListadoGastos from './src/components/ListadoGastos';
 
 const App = () => {
   const [presupuesto, setPresupuesto] = useState(0)
@@ -41,12 +43,14 @@ const App = () => {
     }
     else {
       nuevoGasto.id = Date.now()
+      nuevoGasto.fecha=Date.now()
       setGastos([...gastos, nuevoGasto])
     }
   }
 
   return (
     <SafeAreaView style={styles.contenedorPrincipal}>
+      <ScrollView>
       <View style={styles.encabezado}>
         <Encabezado></Encabezado>
         {bandera ?
@@ -63,15 +67,13 @@ const App = () => {
           ></NuevoPresupuesto>
           )}
       </View>
-      {bandera &&  
-      (
-      <View>
-      <Text style={styles.tituloGastos}>Gastos</Text>
-      <FlatList>
 
-      </FlatList>
-      </View>
+      {bandera &&( 
+      <ListadoGastos
+      gastos={gastos}
+      />
       )}
+      </ScrollView>
       <Modal
         visible={mostrarFormGasto}
         animationType='slide'
@@ -104,13 +106,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   encabezado: {
-    backgroundColor: '#15A3EB'
+    backgroundColor: '#15A3EB',
+    minHeight:400
   },
   imagen: {
     width: 50,
     height: 50,
     position: 'absolute',
-    top: 200,
+    bottom: 5,
     right: 20
   },
   tituloGastos:{
